@@ -13,21 +13,21 @@ def login():
 
     if request.method == "POST":
         req = request.form
-
+        
         name = req["fullname"]
         email = req["email"]
         symp = req["symptoms"]
 
         print(name, email, symp)
 
-        return redirect(url_for("home"))
+        return redirect(url_for("finish"))
     return render_template("login.html")
 
+@app.route("/finish")
+def finish():
+    return render_template("finish.html")
 
 
-@app.route("/<usr>")
-def done(usr):
-    return f"<h1>{usr}<h1>"
 
 
 
