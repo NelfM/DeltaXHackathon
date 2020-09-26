@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<form action = "#", method = "post">
+    <p>Name: </p>
+    <p><input type = "text" name = "nm" /></p>
+
+    <p>Email: </p>
+    <p><input x = "text" email = "em"></p>
+
+    <p>Gender: </p>
+    <p>Male<input type = "radio"/></p>
+    <p>Female<input type = "radio"/></p>
+
+    <p>Symptoms(Please be as specific as possible): </p>
+    <p><input y = "text" symptoms = "sy"></p>
+
+    <p><input type = "submit" value = "submit" /></p>
+</form>
+{% endblock %}
