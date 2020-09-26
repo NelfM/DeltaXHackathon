@@ -3,19 +3,25 @@
 
 {% block content %}
 <form action = "#", method = "post">
-    <p>Name: </p>
-    <p><input type = "text" name = "nm" /></p>
+    <div class="form-group">
+        <label>Full Name </label>
+        <input class = "form-control" type = "text" name = "fullname" >
+    </div>
 
-    <p>Email: </p>
-    <p><input x = "text" email = "em"></p>
+    <div class="form-group">
+        <label>Email </label>
+        <input class = "form-control" type = "email" name = "email" >
+    </div>
 
-    <p>Gender: </p>
-    <p>Male<input type = "radio"/></p>
-    <p>Female<input type = "radio"/></p>
+    <div class="form-group">
+        <label>Symptoms </label>
+        <input class = "form-control" type = "symptoms" name = "symptoms" >
+    </div>
+    
+    <button type = "submit" class="btn btn-primary">Submit</button>
 
-    <p>Symptoms(Please be as specific as possible): </p>
-    <p><input y = "text" symptoms = "sy"></p>
+    
 
-    <p><input type = "submit" value = "submit" /></p>
+    
 </form>
 {% endblock %}
