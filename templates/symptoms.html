@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+<heading>
+    <link rel="stylesheet" href="mystyle.css">
+    
+</heading>
+
+
+<body>
+<ul id="1">
+{% for i in range(1, len1)%}
+
+    <li> {{i}} {{rows1[i]}}</li>
+    
+{%endfor%}
+</ul>
+
+<ul id="2">
+    {% for i in range(1, len2)%}
+        
+        <li> {{i+len1}} {{rows2[i]}}</li>
+        
+    {%endfor%}
+</ul>
+
+<ul id="3">
+    
+    {% for i in range(1, len3)%}
+       
+        <li> {{i+len1+len2}} {{rows3[i]}}</li>
+        
+    {%endfor%}
+</ul>
+
+<ul id="4">
+    {% for i in range(1, len4)%}
+        
+        <li> {{i+len1+len2+len3}} {{rows4[i]}}</li>
+        
+    {%endfor%}
+</ul>
+
+
+<form action = "#", method = "post">
+    <div class = "form-group">
+        <label> Which Symptoms are you experiencing?(Put the number)</label>
+        <input class = "form-control" type = "text" name = "symptom">
+    </div>
+
+    <button type = "submit" class="btn btn-primary">Finish</button>
+</form>
+
+</body>
+{% endblock %}
+
