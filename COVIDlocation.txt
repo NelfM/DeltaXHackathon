@@ -1,0 +1,15 @@
+import csv
+
+counties = []
+
+with open('COVIDlocation.csv', encoding='utf-8') as file:
+  reader = csv.DictReader(file)
+  for row in reader:
+    cases = {}
+    for key in row:
+      cases.update({key : row[key]})
+
+    counties.append(cases)
+  print(int(cases['Santa Clara County']))
+
+  
