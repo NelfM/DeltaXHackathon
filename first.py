@@ -71,6 +71,8 @@ def login():
     return render_template("login.html")
 
 x=0
+userSymptom=""
+list1=[]
 @app.route("/symptoms", methods = ["POST", "GET"])
 def symptoms():
     if request.method == "POST":
@@ -192,8 +194,8 @@ def symptoms():
         booknr = int(x) # I call this once
 
         print()
-        print("Your symptom is " + sym[sym['syd']==booknr]['symptom'][booknr-1])
-        print()
+        userSymptom = sym[sym['syd']==booknr]['symptom'][booknr-1]
+        print(type(userSymptom))
         print('You may have one of the three following diseases:') #,Sddf[booknr].sort_values(ascending=False))
         print()
         list1= Sddf[booknr].sort_values(ascending=False).index
@@ -251,10 +253,10 @@ def finish():
             
             y=int(cases[county])
             
-        return render_template("finish.html", y=y)
+        return render_template("finish.html", y=y, userSymptom=userSymptom, list1=list1[:3])
 
     else:
-        return render_template("finish.html")
+        return render_template("finish.html", userSymptom=userSymptom, list1=list1[:3])
 
 
 
