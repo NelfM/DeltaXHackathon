@@ -3,4 +3,17 @@
 
 {% block content %}
 <h1>Thank You For finishing the form! Your level will be listed right here. Depending on your level, the nearest testing center will be alerted and depending on your level, is when your appointment will be. </h1>
+<p>Input your county so we can tell you the density of covid in your area. This can help you make your decision to go to the hospital or not because if there are to many cases, it is advised that you try and treat it at home</p>
+
+<form action = "#", method = "post">
+    <div class = "form-group">
+        <label> Which County are you living in?(US only)</label>
+        <input class = "form-control" type = "text" name = "county">
+    </div>
+
+    <button type = "submit" class="btn btn-primary">Finish</button>
+</form>
+
+<p>Here is the number of covid cases in your area: </p>
+<p>{{y}}</p>
 {% endblock %}

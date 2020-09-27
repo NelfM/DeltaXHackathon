@@ -10,6 +10,8 @@ from scipy.sparse import coo_matrix, csr_matrix
 
 from subprocess import check_output
 
+from first import sendData
+
 diff=pd.read_csv('diffsydiw.csv')
 sym=pd.read_csv('sym_t.csv')
 dia=pd.read_csv('dia_t.csv')
@@ -119,7 +121,9 @@ Sddf.to_csv('Sddf.csv')
 
 Sydi=pd.DataFrame(cosine_similarity(Ur,VTr.T))
 
-booknr=int(input())
+#new added
+
+booknr=input("Input: ")
 
 print()
 print(sym[sym['syd']==booknr]['symptom'][booknr-1])
