@@ -1,13 +1,6 @@
-#1 {
-    margin-left: 20px;
-}
-#2 {
-    margin-left: 60px;
-
-}
-#3 {
-    margin-left: 100px;
-}
-#4 {
-    margin-left: 150px;
+body {
+    padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
 }

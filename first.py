@@ -46,18 +46,9 @@ for row3 in reader3:
 for row4 in reader4:
     rows4.append(row4["symptom"])
 
-
-
-
-
-
-
-
-
 @app.route("/")
 def home():
     return render_template("index.html", content="Testing")
-
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -116,27 +107,20 @@ def symptoms():
         data, matrix, songsd, user = read_data('diffsydiw.csv')
         data.head(10)
 
-
-
-
         from sklearn.preprocessing import normalize
-
 
         def cosine(plays):
             normalized = normalize(plays)
             return normalized.dot(normalized.T)
 
-
         def bhattacharya(plays):
             plays.data = np.sqrt(plays.data)
             return cosine(plays)
-
 
         def ochiai(plays):
             plays = csr_matrix(plays)
             plays.data = np.ones(len(plays.data))
             return cosine(plays)
-
 
         def bm25_weight(data, K1=1.2, B=0.8):
             """ Weighs each row of the matrix data by BM25 weighting """
@@ -153,7 +137,6 @@ def symptoms():
             ret = coo_matrix(data)
             ret.data = ret.data * (K1 + 1.0) / (K1 * length_norm[ret.row] + ret.data) * idf[ret.col]
             return ret
-
 
         def bm25(plays):
             plays = bm25_weight(plays)
@@ -173,18 +156,13 @@ def symptoms():
             top = get_largest(neighbours)
             return [(artists[other], score, i) for i, (score, other) in enumerate(top)]
 
-
         #songsd = dict(enumerate(data['song'].cat.categories))
         user_count = data.groupby('user').size()
         #to_generate = sorted(list(songsd), key=lambda x: -user_count[x])
 
         similarity = bm25_weight(matrix)
-
-
-
         Ur, Si, VTr = svds(bm25_weight(coo_matrix(matrix)), k=100)
         VTr=pd.DataFrame(VTr)
-
 
         Sddf=pd.DataFrame(cosine_similarity(Ur,VTr.T),columns=user_count.index,index=list(songsd.index))
         Sddf.to_csv('Sddf.csv')
@@ -193,53 +171,30 @@ def symptoms():
 
         booknr = int(x) # I call this once
 
-        print()
         userSymptom = sym[sym['syd']==booknr]['symptom'][booknr-1]
-        print(type(userSymptom))
-        print('You may have one of the three following diseases:') #,Sddf[booknr].sort_values(ascending=False))
-        print()
-        list1= Sddf[booknr].sort_values(ascending=False).index
+        # print('You may have one of the three following diseases:') #,Sddf[booknr].sort_values(ascending=False))
+        rawList = Sddf[booknr].sort_values(ascending=False).index
+        list1 = []
         count=0
-        for i in list1[:3]:
+        for i in rawList[:3]:
             count += 1
-            print(str(count) + ". " + dia[dia['did']==i].diagnose.values[0])
+            list1.append(dia[dia['did']==i].diagnose.values[0])
         #------------------------------------------
 
-        
-        return redirect(url_for("finish"))
+        return render_template("finish.html", userSymptom=userSymptom, list1=list1[:3])
+        # return redirect(url_for("finish"))
     
     return render_template("symptoms.html", len1 = len(rows1), rows1 = rows1,
                                             len2 = len(rows2), rows2 = rows2,
                                             len3 = len(rows3), rows3 = rows3,
                                             len4 = len(rows4), rows4 = rows4)
 
-
-#---------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-#--------------------------------------------
-
-
-
-
-
-
 @app.route("/finish", methods = ["POST", "GET"])
 def finish():
     if request.method == "POST":
         req = request.form
         county = req["county"]
-        
+        userSymptom = req["symptom"]
         counties = []
 
         with open('Covid Dataset.csv', encoding='utf-8') as file:
@@ -248,17 +203,11 @@ def finish():
                 cases = {}
                 for key in row:
                     cases.update({key : row[key]})
-
                 counties.append(cases)
-            
-            y=int(cases[county])
-            
-        return render_template("finish.html", y=y, userSymptom=userSymptom, list1=list1[:3])
-
+            y = int(cases[county])
+        return render_template("finish.html", y=y, userSymptom=userSymptom, county=county, list1=list1[:3])
     else:
         return render_template("finish.html", userSymptom=userSymptom, list1=list1[:3])
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
