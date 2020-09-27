@@ -2,7 +2,7 @@ import csv
 
 counties = []
 
-with open('COVIDlocation.csv', encoding='utf-8') as file:
+with open('Covid Dataset.csv', encoding='utf-8') as file:
   reader = csv.DictReader(file)
   for row in reader:
     cases = {}
@@ -10,6 +10,11 @@ with open('COVIDlocation.csv', encoding='utf-8') as file:
       cases.update({key : row[key]})
 
     counties.append(cases)
-  print(int(cases['Santa Clara County']))
-
-  
+  while(True):
+    county = input("County Name: ")
+    if county not in cases:
+      print("Please check spelling, capitalize every letter, and make sure to add County or City at the end")
+    else:
+      print("There are " +str(cases[county]) + " COVID-19 cases in your county")
+      break
+    
